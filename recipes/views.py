@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 #from utils.recipes.factory import make_recipe
 from .models import Recipe
 
+
 # Create your views here.
 def home(request):
     recipes = Recipe.objects.filter(is_published=True).order_by('-id')
@@ -13,7 +14,6 @@ def category(request, category_id):
     recipes = Recipe.objects.filter(
         category__id=category_id, is_published=True,
         ).order_by('-id')
-
     return render(request, 'recipes/pages/category.html',
                   context={'recipes': recipes})
 
@@ -21,9 +21,9 @@ def category(request, category_id):
 def recipe(request, id):
     # recipe = Recipe.objects.filter(
     #     pk=id, is_published=True,
-    #     ).order_by('-id').first()
-    
+    #     ).order_by('-id').first()    
     recipe = get_object_or_404(Recipe, pk=id, is_published=True,)
 
-    return render(request, 'recipes/pages/recipe-view.html', context={
-        'recipe': recipe, 'is_detail_page': True})
+    return render(request, 'recipes/pages/recipe-view.html',
+                  context={'recipe': recipe, 'is_detail_page': True})
+
